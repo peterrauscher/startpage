@@ -1,0 +1,80 @@
+@font-face {
+  font-family: "Hack";
+  src: local("Hack Regular"), url("ttf/Hack-Regular.ttf");
+}
+
+:root {
+  --bg: #1a1b26;
+  --fg: #c0caf5;
+  --black: #15161e;
+  --red: #f7768e;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --blue: #7aa2f7;
+  --purple: #bb9af7;
+  --cyan: #7dcfff;
+  --light-gray: #a9b1d6;
+  --gray: #414868;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  font-family: "Hack", monospace;
+}
+
+body {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+#terminal {
+  margin: 5% 5%;
+}
+
+.prompt {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.username {
+  color: var(--green);
+}
+
+.hostname {
+  color: var(--cyan);
+}
+
+.loc {
+  color: var(--purple);
+}
+
+.caret {
+  color: var(--red);
+}
+
+#input {
+  outline: none;
+  background-color: transparent;
+  margin: 0;
+  width: 100%;
+  font: inherit;
+  border: none;
+  color: inherit;
+}
+
+footer {
+  background-color: var(--gray);
+  color: var(--blue);
+  text-align: left;
+  height: 2rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 0 0;
+  padding: 0 0;
+}
