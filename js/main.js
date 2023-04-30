@@ -1,4 +1,3 @@
-import commands from "./commands";
 const terminal = document.getElementById("terminal");
 const input = document.getElementById("input");
 
@@ -14,6 +13,16 @@ const promptLine = `
     <span id="cursor"></span>
 </div>
 `;
+
+const commands = [
+  {
+    name: "clear",
+    description: "Clear the terminal.",
+    execute: function (terminal, input) {
+      terminal.innerHTML = "";
+    },
+  },
+];
 
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
