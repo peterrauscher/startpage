@@ -16,11 +16,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: ${{ github.head_ref }}
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
-          # This part is also where you can pass other options, for example:
+          only_changed: True
           prettier_options: --write .
   publish:
     needs: prettier
