@@ -18,63 +18,109 @@
 }
 
 html {
-  height: 100vh;
-  width: 100vw;
   font-family: "Hack", monospace;
+  text-align: center;
+  color: var(--fg);
+  background-color: var(--gray);
+  /* background-size: cover; */
+  /* background-position: center; */
 }
 
+html,
 body {
-  text-align: center;
   margin: 0;
   padding: 0;
-  background-color: var(--bg);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.status-bar {
+  font-size: x-small;
+  height: 3vh;
+  padding: 0;
+  margin-bottom: 1vh;
+}
+
+.shortcuts-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-gap: 2vh;
+}
+
+.shortcuts {
+  width: fit-content;
+  margin: 0 0;
+  padding: 0;
+}
+
+.shortcuts:first-child {
+  font-weight: 900;
+}
+
+.shortcut {
+  text-decoration: none;
   color: var(--fg);
 }
 
+.shortcut:hover {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.pad-terminal {
+  padding-top: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  height: 92vh;
+}
+
+.scrollable {
+  height: 92vh;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
 #terminal {
-  margin: 5% 5%;
+  min-height: 100%;
+  /* line-height: 0.5rem; */
+  box-sizing: border-box;
+  padding: 1rem;
+  background-color: rgba(21, 22, 30, 0.9);
+  border: 1px hidden var(--fg);
+  border-radius: 15px;
+  text-align: left;
+}
+
+#terminal p {
+  margin: 2px;
 }
 
 .prompt {
-  width: 100%;
-  margin: 0 auto;
   display: flex;
 }
 
-.username {
+.green {
   color: var(--green);
 }
 
-.hostname {
+.cyan {
   color: var(--cyan);
 }
 
-.loc {
+.purple {
   color: var(--purple);
 }
 
-.caret {
+.red {
   color: var(--red);
 }
 
 #input {
+  width: 100%;
   outline: none;
   background-color: transparent;
-  margin: 0;
-  width: 100%;
   font: inherit;
   border: none;
   color: inherit;
-}
-
-footer {
-  background-color: var(--gray);
-  color: var(--blue);
-  text-align: left;
-  height: 2rem;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  margin: 0 0;
-  padding: 0 0;
 }
