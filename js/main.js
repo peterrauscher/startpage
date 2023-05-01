@@ -1,39 +1,41 @@
-const terminal = document.getElementById("terminal");
+import commands from "./commands.js";
+import executors from "./executors.js";
+import { error, render } from "./helpers.js";
+
 const input = document.getElementById("input");
-
-const promptLine = `
-<div class="prompt">
-    <span class="username">peter</span>
-    <span>@</span>
-    <span class="hostname">macbook</span>
-    <span>:</span>
-    <span class="loc">~</span>
-    <span class="caret">&nbsp;$&nbsp;</span>
-    <input id="input" autofocus />
-    <span id="cursor"></span>
-</div>
-`;
-
-const commands = [
-  {
-    name: "clear",
-    description: "Clear the terminal.",
-    execute: function (terminal, input) {
-      terminal.innerHTML = "";
-    },
-  },
-];
+const output = document.getElementById("output");
 
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    const command = input.value.trim();
-    terminal.innerHTML += `\n<span class="caret">&nbsp;$&nbsp;</span>${command}`;
-    const cmd = commands.find((c) => c.name === command);
-    if (cmd) {
-      cmd.execute(terminal, input);
-    } else {
-      terminal.innerHTML += `${command}: command not found\n`;
+    const userInput = input.value.trim().split(" ");
+    const command = userInput[0];
+    const options = userInput.slice(1);
+    render(`<span class="red">$&nbsp;</span>${command}`);
+    try {
+      const commandDetails = commands.find((c) => c.name.includes(command));
+      if (commandDetails) {
+        let result;
+        if (command === "help") result = commandDetails.execute(commands);
+        else result = commandDetails.execute(options);
+        if (result) output.innerHTML += result;
+      } else {
+        error("yellow", `${command}: command not found`);
+      }
+    } catch (e) {
+      error("red", "JS Error", e.message);
     }
     input.value = "";
   }
+});
+
+window.addEventListener("load", (event) => {
+  executors.ls();
+  executors.motd();
+  let filenames = ["purple-mountains.jpg"];
+  let root = document.getElementsByTagName("html")[0];
+  root.style.backgroundImage = `url("./backgrounds/${
+    filenames[Math.floor(Math.random() * filenames.length)]
+  }")`;
+  root.style.backgroundSize = "cover";
+  root.style.backgroundPosition = "center";
 });
