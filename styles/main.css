@@ -116,6 +116,10 @@ body {
   color: var(--red);
 }
 
+.yellow {
+  color: var(--yellow);
+}
+
 #input {
   width: 100%;
   outline: none;

@@ -1,10 +1,9 @@
-const addHistory = (command) => {
-  const history = JSON.parse(localStorage.getItem("history")) || [];
-  history.push(command);
-  localStorage.setItem("history", JSON.stringify(history));
-  render(command, false);
-  render("<br />", false);
-  input.focus();
+const dateDiffInMinutes = (a, b) => {
+  a = parseInt(a);
+  b = parseInt(b);
+  const _MS_PER_MIN = 1000 * 60;
+  let res = Math.floor((b - a) / _MS_PER_MIN);
+  return res;
 };
 
 const render = (text, needsMarkup = true) => {
@@ -13,7 +12,6 @@ const render = (text, needsMarkup = true) => {
   } else {
     output.innerHTML += text;
   }
-  output.scrollTop = output.scrollHeight;
   input.focus();
 };
 
@@ -22,65 +20,61 @@ const error = (color, type, message) => {
 };
 
 const getWeather = () => {
-  let cached = false;
-  // let cached = localStorage.getItem("cachedWeather");
-  if (cached) {
-    return JSON.parse(cached);
-  } else {
-    let loc = localStorage.getItem("loc");
-    let WEATHER_API_KEY = localStorage.getItem("WEATHER_API_KEY");
-    fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${loc}&appid=${WEATHER_API_KEY}`
-    )
-      .then((geoRes) => geoRes.json())
-      .then((geoData) => {
-        fetch(``)
-          .then((weatherRes) => weatherRes.json())
-          .then((weatherData) => {
-            console.log(weatherData);
-            console.log(geoData);
-            let weather = data.weather[0].main;
-            let temp = data.main.temp;
-            let city = data.name;
-            let country = data.sys.country;
-            let humidity = data.main.humidity;
-            let wind = data.wind.speed;
-            let date = new Date();
-            let day = date.getDate();
-            let month = date.getMonth() + 1;
-            let year = date.getFullYear();
-            let time = date.getHours() + ":" + date.getMinutes();
-            let dateString = `${day}/${month}/${year} ${time}`;
-            let cacheData = {
-              weather,
-              temp,
-              city,
-              country,
-              humidity,
-              wind,
-              dateString,
-            };
-            localStorage.setItem("cachedWeather", JSON.stringify(cacheData));
-          })
-          .catch((e) => {
-            error("red", "Weather API Error", e);
-            console.log(e);
-          });
-      })
-      .catch((e) => {
-        error("red", "Weather API Error", e);
-        console.log(e);
-      });
+  let loc = localStorage.getItem("loc");
+  let WEATHER_API_KEY = localStorage.getItem("WEATHER_API_KEY");
+  if (!loc || !WEATHER_API_KEY) {
+    error(
+      "red",
+      "Unauthorized",
+      "API key and location are not set, run `weather set` for instructions"
+    );
+    return;
   }
+  let cached = localStorage.getItem("cachedWeather");
+  if (cached) {
+    cached = JSON.parse(cached);
+    if (dateDiffInMinutes(cached.fetchedAt, Date.now()) < 15) {
+      render(
+        `It's ${cached.temp} °F out in ${cached.name}, ${cached.state}. Expect ${cached.desc}.`
+      );
+      return;
+    }
+  }
+  fetch(
+    `https://api.openweathermap.org/geo/1.0/direct?q=${loc}&appid=${WEATHER_API_KEY}`
+  )
+    .then((geoRes) => geoRes.json())
+    .then((geoData) => {
+      geoData = geoData[0];
+      let cacheData = { ...geoData };
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=${geoData.lat}&lon=${geoData.lon}&appid=${WEATHER_API_KEY}`
+      )
+        .then((weatherRes) => weatherRes.json())
+        .then((weatherData) => {
+          cacheData = {
+            ...cacheData,
+            icon: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
+            desc: weatherData.weather[0].description,
+            temp: Math.floor(weatherData.main.temp),
+            fetchedAt: Date.now().toString(),
+          };
+          render(
+            `It's ${cached.temp} °F out in ${cached.name}, ${cached.state}. Expect ${cached.desc}.`
+          );
+          localStorage.setItem("cachedWeather", JSON.stringify(cacheData));
+        })
+        .catch((e) => {
+          error("red", "Weather API Error", e);
+          console.log(e);
+        });
+    })
+    .catch((e) => {
+      error("red", "Weather API Error", e);
+      console.log(e);
+    });
 };
 
 const getDate = () => {};
 
-const dateDiffInMinutes = (a, b) => {
-  const _MS_PER_MIN = 1000 * 60;
-  let res = Math.floor((b - a) / _MS_PER_MIN);
-  console.log(res);
-  return res;
-};
-
-export { addHistory, render, error, getWeather, getDate, dateDiffInMinutes };
+export { render, error, getWeather, getDate, dateDiffInMinutes };

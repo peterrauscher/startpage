@@ -14,12 +14,10 @@ input.addEventListener("keydown", function (e) {
     try {
       const commandDetails = commands.find((c) => c.name.includes(command));
       if (commandDetails) {
-        let result;
-        if (command === "help") result = commandDetails.execute(commands);
-        else result = commandDetails.execute(options);
-        if (result) output.innerHTML += result;
+        if (command === "help") commandDetails.execute(commands);
+        else commandDetails.execute(options);
       } else {
-        error("yellow", `${command}: command not found`);
+        error("yellow", command, "command not found");
       }
     } catch (e) {
       error("red", "JS Error", e.message);
@@ -28,7 +26,7 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
   executors.ls();
   executors.motd();
   let filenames = ["purple-mountains.jpg"];

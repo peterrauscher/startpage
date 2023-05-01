@@ -1,4 +1,4 @@
-import { dateDiffInMinutes, render } from "./helpers.js";
+import { dateDiffInMinutes, error, getWeather, render } from "./helpers.js";
 import shortcuts from "./shortcuts.js";
 
 export default {
@@ -46,7 +46,7 @@ export default {
         render(`Location set to ${options[2]}`);
       } else render(usage, false);
     } else {
-      return render(usage, false);
+      render(usage, false);
     }
   },
   search: (options) => {
@@ -87,7 +87,7 @@ export default {
         .replaceAll(" ", "&nbsp;");
       helpMessage += `<p><span class="cyan">${paddedCommand}</span>&nbsp;&nbsp;&nbsp;&nbsp;${c.description}</p>`;
     });
-    return helpMessage;
+    render(helpMessage, false);
   },
   clear: () => {
     output.innerHTML = "";
