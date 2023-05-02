@@ -1,6 +1,6 @@
 # Startpage
 
-My iTerm-inspired startpage page for faster web browsing. Because everything's better on the command line!
+An iTerm-inspired startpage page for faster web browsing. Because everything's better on the command line!
 
 ![Screenshot](/Screenshot.png)
 
