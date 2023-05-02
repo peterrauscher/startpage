@@ -120,6 +120,22 @@ body {
   color: var(--yellow);
 }
 
+.blue {
+  color: var(--blue);
+}
+
+.light-gray {
+  color: var(--light-gray);
+}
+
+.gray {
+  color: var(--gray);
+}
+
+.black {
+  color: var(--black);
+}
+
 #input {
   width: 100%;
   outline: none;

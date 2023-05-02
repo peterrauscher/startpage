@@ -65,9 +65,7 @@ export default {
       let shortcutsOutput = '<div class="shortcuts-container">';
       shortcuts.forEach((s) => {
         shortcutsOutput += `<div class="shortcuts"><p class="${s.color}">~/${s.category}</p>`;
-        s.items.forEach((site) => {
-          let name = Object.keys(site)[0];
-          let link = site[name];
+        Object.entries(s.items).forEach(([name, link]) => {
           shortcutsOutput += `<p><span class="${s.color}">> </span><a class="shortcut" href="${link}">${name}</a></p>`;
         });
         shortcutsOutput += "</div>";
