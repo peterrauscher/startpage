@@ -2,6 +2,8 @@
 
 My iTerm-inspired startpage page for faster web browsing. Because everything's better on the command line!
 
+![Screenshot](/Screenshot.png)
+
 ## Installation
 
 You have two main options:
@@ -51,16 +53,16 @@ Shortcuts are the links displayed when you first open the page, or when you run 
 
 The file is an array of objects of the schema:
 
-```json
+```
 {
-    category: "Name of Category",
-    color: "color of category header",
-    items: {
-      "Example": "https://example.com",
-      "Another Example": "https://anotherexample.com",
-      ...
-    }
+  category: "Name of Category",
+  color: "color of category header",
+  items: {
+    "Example": "https://example.com",
+    "Another Example": "https://anotherexample.com",
+    ...
   }
+}
 ```
 
 Feel free to add/remove categories and links.
