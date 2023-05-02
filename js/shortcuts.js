@@ -38,7 +38,7 @@ export default [
       Fmovies: "https://fmovies.to/home",
       Zoro: "https://zoro.to",
       TempMail: "https://tempmail.email/",
-      IPTorrents: "https://iptorrents.com/t",
+      // IPTorrents: "https://iptorrents.com/t",
     },
   },
 ];
