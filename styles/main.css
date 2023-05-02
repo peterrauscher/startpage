@@ -72,11 +72,11 @@ body {
   padding-top: 2vh;
   padding-left: 2vh;
   padding-right: 2vh;
-  height: 92vh;
+  height: 96vh;
 }
 
 .scrollable {
-  height: 92vh;
+  height: 96vh;
   overflow: auto;
   box-sizing: border-box;
 }
