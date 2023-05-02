@@ -60,7 +60,7 @@ const getWeather = () => {
             fetchedAt: Date.now().toString(),
           };
           render(
-            `It's ${cached.temp} °F out in ${cached.name}, ${cached.state}. Expect ${cached.desc}.`
+            `It's ${cacheData.temp} °F out in ${cacheData.name}, ${cacheData.state}. Expect ${cacheData.desc}.`
           );
           localStorage.setItem("cachedWeather", JSON.stringify(cacheData));
         })
